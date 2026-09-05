@@ -350,11 +350,11 @@ public class CWPlayerHandsController : MonoBehaviour
 		if (spinSpeed > 3000f && prevSpinSpeed <= 3000f && endOfSpinningCardFX != null)
 		{
 			GameObject gameObject = SLOTGame.InstantiateFX(endOfSpinningCardFX) as GameObject;
-			if (gameObject != null)
+			if (gameObject != null && !PlayerInfoScript.GetInstance().ReducedAnimationsEnabled)
 			{
 				Camera camera = NGUITools.FindCameraForLayer(cardObj.layer);
 				Camera camera2 = NGUITools.FindCameraForLayer(gameObject.layer);
-				if (camera != null && camera2 != null)
+				if (camera != nulhttps://github.com/Tsavoritel/OpenCardWarsl && camera2 != null)
 				{
 					Vector3 position = cardObj.transform.position;
 					position = camera.WorldToScreenPoint(position);

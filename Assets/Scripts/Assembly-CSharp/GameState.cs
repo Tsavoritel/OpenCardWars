@@ -1086,7 +1086,7 @@ public class GameState
 		}
 		SummonedCards[(int)player][card.Form.ID].Add(type);
 		phaseMgr = BattlePhaseManager.GetInstance();
-		if (card.Form.Rarity >= 5)
+		if (card.Form.Rarity >= 5 && !PlayerInfoScript.GetInstance().ReducedAnimationsEnabled)
 		{
 			phaseMgr.Phase = ((player != PlayerType.User) ? BattlePhase.P2SetupActionRareCard : BattlePhase.P1SetupActionRareCard);
 			CWCharacterAnimController.GetInstance().DoEffectPlayCard(player, lane, card);

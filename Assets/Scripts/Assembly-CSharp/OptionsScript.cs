@@ -12,7 +12,9 @@ public class OptionsScript : MonoBehaviour
 
 	public ButtonToggleScript toggleNotifications;
 
-	public ButtonToggleScript toggleLowResolution;
+    public ButtonToggleScript toggleReducedAnimations;
+
+    public ButtonToggleScript toggleLowResolution;
 
 	public GameObject LowResOverride;
 
@@ -92,7 +94,11 @@ public class OptionsScript : MonoBehaviour
 			{
 				toggleNotifications.SetToggle(PlayerInfoScript.GetInstance().NotificationEnabled);
 			}
-		}
+            if (toggleReducedAnimations != null)
+            {
+                toggleReducedAnimations.SetToggle(PlayerInfoScript.GetInstance().ReducedAnimationsEnabled);
+            }
+        }
 		if (toggleLowResolution != null)
 		{
 			toggleLowResolution.SetToggle(!KFFLODManager.GetLowEndOverride());
@@ -111,6 +117,12 @@ public class OptionsScript : MonoBehaviour
 		PlayerInfoScript.GetInstance().NotificationEnabled = !PlayerInfoScript.GetInstance().NotificationEnabled;
 		PlayerInfoScript.GetInstance().Save();
 	}
+
+	public void ToggleReducedAnimations()
+	{
+        PlayerInfoScript.GetInstance().ReducedAnimationsEnabled = !PlayerInfoScript.GetInstance().ReducedAnimationsEnabled;
+        PlayerInfoScript.GetInstance().Save();
+    }
 
 	public void ToggleResolution()
 	{

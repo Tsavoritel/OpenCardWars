@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using UnityEngine;
 
@@ -242,16 +243,16 @@ public class CWFloopActionManager : MonoBehaviour
 		string stringFromJson2 = GetStringFromJson(scriptVizName, "PersistFX");
 		string stringFromJson3 = GetStringFromJson(scriptVizName, "ContextFX");
 		bool persist = stringFromJson2 != null && stringFromJson2 != string.Empty;
-		GameObject spawnedFXPersist = GetSpawnedFXPersist(stringFromJson, target, persist, source, stringFromJson3, lane);
-		if (spawnedFXPersist != null)
-		{
-			Camera componentInChildren = spawnedFXPersist.GetComponentInChildren<Camera>();
-			if (componentInChildren != null)
-			{
-				usingSpellCamera = true;
-				SpellCamera = componentInChildren;
-			}
-		}
+        GameObject spawnedFXPersist = GetSpawnedFXPersist(stringFromJson, target, persist, source, stringFromJson3, lane);
+        if (spawnedFXPersist != null)
+        {
+            Camera componentInChildren = spawnedFXPersist.GetComponentInChildren<Camera>();
+            if (componentInChildren != null)
+            {
+                usingSpellCamera = true;
+                SpellCamera = componentInChildren;
+            }
+        }
 	}
 
 	private void TriggerSpawnFXWithRotation(string scriptVizName, GameObject target, string colName, CardScript source, Quaternion rotation)
@@ -261,8 +262,8 @@ public class CWFloopActionManager : MonoBehaviour
 		string stringFromJson3 = GetStringFromJson(scriptVizName, "ContextFX");
 		bool persist = stringFromJson2 != null && stringFromJson2 != string.Empty;
 		GameObject spawnedFXPersist = GetSpawnedFXPersist(stringFromJson, target, persist, source, stringFromJson3);
-		if (spawnedFXPersist != null)
-		{
+        if (spawnedFXPersist != null)
+        {
 			spawnedFXPersist.transform.rotation = rotation;
 			Camera componentInChildren = spawnedFXPersist.GetComponentInChildren<Camera>();
 			if (componentInChildren != null)
@@ -280,8 +281,8 @@ public class CWFloopActionManager : MonoBehaviour
 		string stringFromJson3 = GetStringFromJson(scriptVizName, "ContextFX");
 		bool persist = stringFromJson2 != null && stringFromJson2 != string.Empty;
 		GameObject spawnedFXPersist = GetSpawnedFXPersist(stringFromJson, startObj, persist, source, stringFromJson3);
-		if (!(spawnedFXPersist == null))
-		{
+        if (spawnedFXPersist != null)
+        {
 			Camera componentInChildren = spawnedFXPersist.GetComponentInChildren<Camera>();
 			if (componentInChildren != null)
 			{
@@ -417,19 +418,28 @@ public class CWFloopActionManager : MonoBehaviour
 
 	private void FloopCameraTrigger(GameObject target, bool targetOffset)
 	{
-		if (targetOffset)
+		if (!PlayerInfoScript.GetInstance().ReducedAnimationsEnabled)
 		{
-			floopActionCamLookAtTarget.transform.position = new Vector3(target.transform.position.x, target.transform.position.y + floopCameraTargetOffsetY, target.transform.position.z);
-		}
+            if (targetOffset)
+            {
+                floopActionCamLookAtTarget.transform.position = new Vector3(target.transform.position.x, target.transform.position.y + floopCameraTargetOffsetY, target.transform.position.z);
+            }
+            else
+            {
+                floopActionCamLookAtTarget.transform.position = target.transform.position;
+            }
+            floopActionCamTarget.transform.position = new Vector3(target.transform.position.x - floopCameraOffsetX, target.transform.position.y + floopCameraOffsetY, target.transform.position.z);
+            CWiTweenCamTrigger component = GetComponent<CWiTweenCamTrigger>();
+            component.tweenName = "ToFloopAction";
+            component.PlayCam();
+        }
 		else
 		{
-			floopActionCamLookAtTarget.transform.position = target.transform.position;
-		}
-		floopActionCamTarget.transform.position = new Vector3(target.transform.position.x - floopCameraOffsetX, target.transform.position.y + floopCameraOffsetY, target.transform.position.z);
-		CWiTweenCamTrigger component = GetComponent<CWiTweenCamTrigger>();
-		component.tweenName = "ToFloopAction";
-		component.PlayCam();
-	}
+            CWiTweenCamTrigger component = GetComponent<CWiTweenCamTrigger>();
+            component.tweenName = "ToP1Setup";
+            component.PlayCam();
+        }
+    }
 
 	private IEnumerator DoSequenceSpawnCreature(float waitTime, CardScript source, CardScript[] targets)
 	{

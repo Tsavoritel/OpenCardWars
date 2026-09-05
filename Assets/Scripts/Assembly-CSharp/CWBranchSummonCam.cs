@@ -16,15 +16,22 @@ public class CWBranchSummonCam : MonoBehaviour
 
 	private void OnClick()
 	{
-		if (phaseMgr.prevPhase == BattlePhase.P1SetupActionRareCard || phaseMgr.prevPhase == BattlePhase.P2SetupActionRareCard)
+		if ((phaseMgr.prevPhase == BattlePhase.P1SetupActionRareCard || phaseMgr.prevPhase == BattlePhase.P2SetupActionRareCard) && !PlayerInfoScript.GetInstance().ReducedAnimationsEnabled)
 		{
-			vantageCam.CreatureSpawnCamera(player);
-			SetTweenState(true);
+            vantageCam.CreatureSpawnCamera(player);
+            SetTweenState(true);
 		}
 		else if (!phaseMgr.alreadySummonedCard.Contains(phaseMgr.currentCardID))
 		{
-			vantageCam.CreatureSpawnCamera(player);
-			SetTweenState(true);
+			if(!PlayerInfoScript.GetInstance().ReducedAnimationsEnabled)
+			{
+                vantageCam.CreatureSpawnCamera(player);
+                SetTweenState(true);
+            }
+			else
+			{
+                SetTweenState(false);
+            }
 			if (phaseMgr.currentCardID != string.Empty)
 			{
 				phaseMgr.alreadySummonedCard.Add(phaseMgr.currentCardID);
