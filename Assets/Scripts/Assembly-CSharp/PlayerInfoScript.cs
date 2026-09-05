@@ -175,6 +175,8 @@ public class PlayerInfoScript : MonoBehaviour
 
 	public bool NotificationEnabled = true;
 
+	public bool ReducedAnimationsEnabled;
+
 	public List<string> tutorialsCompleted = new List<string>();
 
 	public bool AutoBattleSetting;
@@ -1620,7 +1622,8 @@ public class PlayerInfoScript : MonoBehaviour
 		stringBuilder.Append(MakeJS("SelectedMPDeck", SelectedMPDeck) + ",");
 		stringBuilder.Append(MakeJS("MPDeckLeaderID", MPDeckLeaderID) + ",");
 		stringBuilder.Append(MakeJS("NotificationEnabled", NotificationEnabled) + ",");
-		stringBuilder.Append(MakeJS("AutoBattleSetting", AutoBattleSetting) + ",");
+        stringBuilder.Append(MakeJS("ReducedAnimationsEnabled", ReducedAnimationsEnabled) + ",");
+        stringBuilder.Append(MakeJS("AutoBattleSetting", AutoBattleSetting) + ",");
 		stringBuilder.Append(MakeJS("Magic", DetectCheater.CreateChecksum(DetectCheater.MD5Input())) + ",");
 		stringBuilder.Append(MakeJS("KeyRewarded", mGatchaKeyRewarded) + ",");
 		stringBuilder.Append(MakeJS("TOSVersionAgreedTo", TOSVersionAgreedTo) + ",");
@@ -1844,7 +1847,8 @@ public class PlayerInfoScript : MonoBehaviour
 			SelectedDeck = TFUtils.LoadInt(dictionary, "SelectedDeck", 0);
 			SelectedMPDeck = TFUtils.LoadInt(dictionary, "SelectedMPDeck", 0);
 			NotificationEnabled = TFUtils.LoadBoolAsInt(dictionary, "NotificationEnabled", false);
-			Party = TFUtils.LoadString(dictionary, "Party", null);
+            ReducedAnimationsEnabled = TFUtils.LoadBoolAsInt(dictionary, "ReducedAnimationsEnabled", false);
+            Party = TFUtils.LoadString(dictionary, "Party", null);
 			PartyExpiration = TFUtils.LoadInt(dictionary, "PartyExpiration", 0);
 			mNumberofTrophies = TFUtils.LoadInt(dictionary, "NumberofTrophies", 0);
 			mMPPlayerName = TFUtils.LoadString(dictionary, "MPPlayerName", string.Empty);

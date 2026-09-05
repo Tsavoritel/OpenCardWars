@@ -48,7 +48,17 @@ public class SummonScript : MonoBehaviour
 		bool finishedSummoning = false;
 		BattlePhaseManager phaseMgr = BattlePhaseManager.GetInstance();
 		bool alreadySummoned = phaseMgr.alreadySummonedCard.Contains(phaseMgr.currentCardID);
-		yield return new WaitForSeconds(1f);
+		float waitTime;
+		if (PlayerInfoScript.GetInstance().ReducedAnimationsEnabled)
+		{
+			waitTime = 0.5f;
+		}
+		else
+		{
+			waitTime = 1f;
+		}
+
+		yield return new WaitForSeconds(waitTime);
 		StartCoroutine(PlaySpawnAudio());
 		if (SpawnEffect != null)
 		{

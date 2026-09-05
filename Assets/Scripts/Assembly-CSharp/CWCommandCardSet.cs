@@ -104,7 +104,7 @@ public class CWCommandCardSet : MonoBehaviour
 		cardFillScript.canFloop = IsFloopable();
 		cardFillScript.canAct = IsActionable();
 		cardFillScript.creatureObj = creatureObj;
-		SetButtonActiveState(card);
+        SetButtonActiveState(card);
 	}
 
 	private void SetButtonActiveState(CardItem card)

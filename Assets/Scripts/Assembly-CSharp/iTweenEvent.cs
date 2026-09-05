@@ -164,11 +164,15 @@ public class iTweenEvent : MonoBehaviour
 
 	public void Play()
 	{
-		if (!string.IsNullOrEmpty(internalName))
+        if (!string.IsNullOrEmpty(internalName))
 		{
 			Stop();
 		}
-		stopped = false;
+        stopped = false;
+        if (tweenName == "ToFloopAction" && PlayerInfoScript.GetInstance().ReducedAnimationsEnabled)
+        {
+            return;
+        }
 		StartCoroutine(StartEvent());
 	}
 

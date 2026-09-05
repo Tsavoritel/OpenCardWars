@@ -78,7 +78,11 @@ public class CWOpponentActionSequencer : MonoBehaviour
 		}
 		else if (Decision.IsFloop)
 		{
-			yield return new WaitForSeconds(0.5f);
+			yield return new WaitForSeconds(0.2f);
+			if(!PlayerInfoScript.GetInstance().ReducedAnimationsEnabled)
+			{
+                yield return new WaitForSeconds(0.3f);
+            }
 			yield return StartCoroutine(OpponentFloop(Decision));
 		}
 		else
@@ -160,7 +164,7 @@ public class CWOpponentActionSequencer : MonoBehaviour
 
 	private IEnumerator OpponentFloop(AIDecision Decision)
 	{
-		if (floopPanelTween != null)
+		if (floopPanelTween != null && !PlayerInfoScript.GetInstance().ReducedAnimationsEnabled)
 		{
 			floopPanelTween.Play(true);
 		}
@@ -170,6 +174,7 @@ public class CWOpponentActionSequencer : MonoBehaviour
 		floopActionMgr.card = GameState.Instance.GetCard(PlayerType.Opponent, Decision.LaneChoice.Index, Decision.CardChoice.Form.Type);
 		floopActionMgr.player = PlayerType.Opponent;
 		resumeFlag = false;
+
 		yield return StartCoroutine(floopActionMgr.PlayFloopAction());
 		while (!resumeFlag)
 		{
